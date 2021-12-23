@@ -1,0 +1,28 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
+    <title>WriteName</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+
+<body>
+    <div>
+        <h2 id="result">Score: @Session["Result"]</h2>
+        <form action="WriteName" method="post">
+            <div id="result">
+                Your name:
+                <br>
+                <input required name="name" id="username" />
+                <br>
+                <button class="restart" type="submit" id="button" style="margin-right: 0px;">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Style.css")" rel="stylesheet" type="text/css" />
+    <title>Sudoku</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    @{Session["Time"] = DateTime.Now;}
+    <script type="text/javascript">
+        function init() {
+            sec = 0;
+            setInterval(tick, 1000);
+        }
+
+        function tick() {
+            sec++;
+            document.getElementById("timer").
+                childNodes[0].nodeValue = sec;
+        }
+    </script>
+</head>
+
+<body onload="init()">    
+    <div class="main">
+        <h1 class="title">Sudoku</h1>
+        <div class="top">
+            <table align="center" width="400px">
+                <tr>
+                    <th>№</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+                @foreach (var item in ViewBag.Top)
+                {
+                    <tr>
+                        <td class="tabletop">@item.Id</td>
+                        <td class="tabletop">@item.Name</td>
+                        <td class="tabletop">@item.Time.ToString(@"hh\:mm\:ss")</td>
+                        <td class="tabletop"><a href="/Home/LoadBoard/@item.Id"> Solution </a></td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+
+        <div class="game">
+            <div class="message" align="center">@Session["message"]</div>
+            <form action="/Home/End" method="post">
+                <table align="center">
+                    @{int index = 0; }
+                    @for (int i = 0; i < 9; i++)
+                    {
+        <tr>
+            @for (int j = 0; j < 9; j++)
+            {
+        <!--
+if (((i / 3) + (j / 3)) % 2 == 0)
+{
+    <style>
+        td {
+            background: #edf5f1;
+        }
+    </style>
+
+}
+else
+{
+<style>
+    td {
+        background: white;
+    }
+</style>
+}--> if (Array.IndexOf(ViewBag.index, index) != -1)
+        {
+
+        <td class="square" align="center"><input class="inputdis" type="number" name="Squares" readonly value="@ViewBag.board[index++]"></td> }
+                            else
+                            {
+        <td class="square" align="center">
+            <input required name="Squares" type="number" list="Values" class="input" max="9" />
+            <style>
+                input::-webkit-calendar-picker-indicator {
+                    opacity: 0;
+                    width: 5px;
+                }
+
+                input[type='number'] {
+                    -moz-appearance: textfield;
+                }
+
+                input::-webkit-outer-spin-button,
+                input::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                }
+            </style>
+
+            <datalist class="select" id="Values">
+                input::-webkit-calendar-picker-indicator {
+                display: none;
+                }
+                <option value=""></option>
+                <option value="1"></option>
+                <option value="2"></option>
+                <option value="3"></option>
+                <option value="4"></option>
+                <option value="5"></option>
+                <option value="6"></option>
+                <option value="7"></option>
+                <option value="8"></option>
+                <option value="9"></option>
+            </datalist>
+
+        </td>
+index++;
+    }
+
+}
+        </tr>
+}
+
+                </table>
+                <div>
+                    <input type="submit" class="restart" value="Submit" id="button" />
+                    <input class="restart" type="button" value="New Game" onclick="window.location.reload(true);" id="button" />
+                    Timer: <div id="timer" class="timer">  </div>
+                </div>
+
+
+            </form>
+        </div>
+            
+        </div>
+
+</body>
+
+</html>
